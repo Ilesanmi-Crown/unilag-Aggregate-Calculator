@@ -1,0 +1,43 @@
+{
+  "session": "2026/2027",
+  "verificationStatus": "PRELIMINARY",
+  "isCalculationSupported": false,
+  "weights": {
+    "utmeMaxScore": 400,
+    "utmeWeight": 50,
+    "putmeMaxScore": 30,
+    "putmeWeight": 30,
+    "olevelMaxScore": 20,
+    "olevelWeight": 20
+  },
+  "eligibility": {
+    "minimumUtmeScore": 200,
+    "maximumSittings": 1,
+    "requiredSubjectCount": 5,
+    "minimumAge": 16,
+    "minimumAgeDate": "2026-09-30",
+    "historicalPutmePassMark": 12.0
+  },
+  "olevelGrading": {
+    "gradePoints": {
+      "A1": 4.0,
+      "B2": 3.6,
+      "B3": 3.2,
+      "C4": 2.8,
+      "C5": 2.4,
+      "C6": 2.0
+    },
+    "failingGradePoints": 0,
+    "minimumQualifyingGrade": "C6"
+  },
+  "roundingPolicy": {
+    "decimalPlaces": 3,
+    "strategy": "ROUND_HALF_UP"
+  },
+  "source": {
+    "url": "https://unilag.edu.ng/important-notice-on-2026-2027-post-utme-screening-exercise/",
+    "title": "Important Notice on 2026/2027 Post-UTME Screening Exercise",
+    "publishedDate": "2026-06-09",
+    "notes": "Eligibility requirements confirmed (200 UTME threshold, single sitting, 5 credits, age 16). However, an independent 2026/2027 scoring modalities circular with explicit grade mapping has not been formally released on public UNILAG portals. Marked PRELIMINARY; requires explicit caller opt-in to simulate."
+  }
+}

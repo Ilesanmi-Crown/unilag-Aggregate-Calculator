@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #0F2942;
+    --primary-hover: #1A3D60;
+  }
+}
+
+/* Accessible focus ring utility */
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid #0F2942;
+  outline-offset: 2px;
+}

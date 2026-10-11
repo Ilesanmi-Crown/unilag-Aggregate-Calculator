@@ -1,0 +1,1469 @@
+{
+  "session": "2026/2027",
+  "source": {
+    "title": "UNILAG Releases 2026/2027 UTME Merit Cut-Off Marks",
+    "url": "https://unilag.edu.ng/unilag-releases-2026-2027-utme-merit-cut-off-marks/",
+    "publishedDate": "2026-09-16",
+    "verificationStatus": "CONFIRMED"
+  },
+  "disclaimer": "These cut-off marks are historical benchmarks from the 2026/2027 admission session published by the University of Lagos. Achieving a score at or above these cut-offs does not guarantee admission in any academic session.",
+  "totalProgrammes": 112,
+  "records": [
+    {
+      "faculty": "FACULTY OF ARCHITECTURE",
+      "programme": "ARCHITECTURE",
+      "merit": 72.9,
+      "catchment": {
+        "ekiti": 56.85,
+        "lagos": 61.925,
+        "ogun": 65.45,
+        "ondo": 54.55,
+        "osun": 67.375,
+        "oyo": 56.525
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARCHITECTURE",
+      "programme": "LANDSCAPE ARCHITECTURE",
+      "merit": null,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARCHITECTURE",
+      "programme": "INTERIOR ARCHITECTURE",
+      "merit": null,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "ENGLISH",
+      "merit": 68.15,
+      "catchment": {
+        "ekiti": 56.65,
+        "lagos": 63.475,
+        "ogun": 63.7,
+        "ondo": 57.1,
+        "osun": 53.475,
+        "oyo": 61.325
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "FRENCH",
+      "merit": 64,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 62.2,
+        "ogun": 60.45,
+        "ondo": null,
+        "osun": null,
+        "oyo": 59.85
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "RUSSIAN",
+      "merit": 55.45,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "GERMAN",
+      "merit": 69.125,
+      "catchment": {
+        "ekiti": 54.875,
+        "lagos": 59.725,
+        "ogun": 67.775,
+        "ondo": 63.925,
+        "osun": 59.25,
+        "oyo": 53.925
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "HISTORY & STRATEGIC STUDIES",
+      "merit": 70.8,
+      "catchment": {
+        "ekiti": 62.65,
+        "lagos": 67.425,
+        "ogun": 68.65,
+        "ondo": 63.2,
+        "osun": 64.225,
+        "oyo": 66.6
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "LINGUISTICS/IGBO",
+      "merit": null,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "LINGUISTICS/YORUBA",
+      "merit": 60.35,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "LINGUISTICS",
+      "merit": 72.575,
+      "catchment": {
+        "ekiti": 69.525,
+        "lagos": 59.575,
+        "ogun": 70.6,
+        "ondo": 66.425,
+        "osun": 68.375,
+        "oyo": 69.1
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "CHINESE",
+      "merit": 71.625,
+      "catchment": {
+        "ekiti": 67.15,
+        "lagos": 66.75,
+        "ogun": 70.325,
+        "ondo": 71.275,
+        "osun": 70.9,
+        "oyo": 70.175
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "PHILOSOPHY",
+      "merit": 67.725,
+      "catchment": {
+        "ekiti": 67.3,
+        "lagos": 61.15,
+        "ogun": 66.6,
+        "ondo": 57.925,
+        "osun": 55.5,
+        "oyo": 58.15
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "CHRISTIAN RELIGIOUS STUDIES",
+      "merit": 55.825,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ARTS",
+      "programme": "ISLAMIC RELIGIOUS STUDIES",
+      "merit": 56.35,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": 51.95,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF BASIC MEDICAL SCIENCES",
+      "programme": "ANATOMY",
+      "merit": 72.7,
+      "catchment": {
+        "ekiti": 59.8,
+        "lagos": 72.1,
+        "ogun": 70.9,
+        "ondo": 69.425,
+        "osun": 67.35,
+        "oyo": 67.975
+      }
+    },
+    {
+      "faculty": "FACULTY OF BASIC MEDICAL SCIENCES",
+      "programme": "PHARMACOLOGY",
+      "merit": 74.275,
+      "catchment": {
+        "ekiti": 70.4,
+        "lagos": 71.625,
+        "ogun": 72.675,
+        "ondo": 69.75,
+        "osun": 71.3,
+        "oyo": 65.125
+      }
+    },
+    {
+      "faculty": "FACULTY OF BASIC MEDICAL SCIENCES",
+      "programme": "PHYSIOLOGY",
+      "merit": 71.125,
+      "catchment": {
+        "ekiti": 68.05,
+        "lagos": 68.65,
+        "ogun": 61.175,
+        "ondo": 69.85,
+        "osun": 66.375,
+        "oyo": 71.025
+      }
+    },
+    {
+      "faculty": "FACULTY OF CLINICAL SCIENCES",
+      "programme": "MEDICINE & SURGERY",
+      "merit": 83.425,
+      "catchment": {
+        "ekiti": 79.425,
+        "lagos": 79.1,
+        "ogun": 81.75,
+        "ondo": 81.35,
+        "osun": 79.825,
+        "oyo": 80.05
+      }
+    },
+    {
+      "faculty": "FACULTY OF COMMUNICATION & MEDIA STUDIES",
+      "programme": "MASS COMMUNICATION",
+      "merit": 74.6,
+      "catchment": {
+        "ekiti": 64.275,
+        "lagos": 72.45,
+        "ogun": 73.025,
+        "ondo": 71.9,
+        "osun": 70.775,
+        "oyo": 71.725
+      }
+    },
+    {
+      "faculty": "FACULTY OF COMMUNICATION & MEDIA STUDIES",
+      "programme": "PUBLIC RELATIONS",
+      "merit": 61.225,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": 56.35,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF COMMUNICATION & MEDIA STUDIES",
+      "programme": "BROADCASTING",
+      "merit": 63.1,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF COMPUTING & INFORMATICS",
+      "programme": "ARTIFICIAL INTELLIGENCE",
+      "merit": 53.2,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF COMPUTING & INFORMATICS",
+      "programme": "COMPUTER SCIENCE",
+      "merit": 82.05,
+      "catchment": {
+        "ekiti": 78.4,
+        "lagos": 73.225,
+        "ogun": 79.175,
+        "ondo": 79.675,
+        "osun": 78.85,
+        "oyo": 79.875
+      }
+    },
+    {
+      "faculty": "FACULTY OF COMPUTING & INFORMATICS",
+      "programme": "CYBERSECURITY",
+      "merit": 66.075,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 60.4,
+        "ogun": 59.975,
+        "ondo": 62.25,
+        "osun": 59.375,
+        "oyo": 56.75
+      }
+    },
+    {
+      "faculty": "FACULTY OF COMPUTING & INFORMATICS",
+      "programme": "SOFTWARE ENGINEERING",
+      "merit": 59.25,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF CREATIVE ARTS",
+      "programme": "MUSIC",
+      "merit": 63.45,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": 59.5,
+        "ondo": 54.65,
+        "osun": 59.625,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF CREATIVE ARTS",
+      "programme": "FILM PRODUCTION",
+      "merit": 69.625,
+      "catchment": {
+        "ekiti": 58.475,
+        "lagos": 65.775,
+        "ogun": 62.875,
+        "ondo": 65.8,
+        "osun": 55.125,
+        "oyo": 55.3
+      }
+    },
+    {
+      "faculty": "FACULTY OF CREATIVE ARTS",
+      "programme": "THEATRE ARTS",
+      "merit": 71.5,
+      "catchment": {
+        "ekiti": 70.4,
+        "lagos": 67.2,
+        "ogun": 69.85,
+        "ondo": 68.025,
+        "osun": 68.775,
+        "oyo": 68.45
+      }
+    },
+    {
+      "faculty": "FACULTY OF CREATIVE ARTS",
+      "programme": "FINE AND APPLIED ARTS",
+      "merit": 66.53,
+      "catchment": {
+        "ekiti": 58.23,
+        "lagos": 59.18,
+        "ogun": 54.88,
+        "ondo": 59.5,
+        "osun": 61.23,
+        "oyo": 65.53
+      }
+    },
+    {
+      "faculty": "FACULTY OF DENTAL SCIENCES",
+      "programme": "DENTISTRY",
+      "merit": 79.025,
+      "catchment": {
+        "ekiti": 74.575,
+        "lagos": 72.725,
+        "ogun": 77.3,
+        "ondo": 76.325,
+        "osun": 77.775,
+        "oyo": 76.65
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "ADULT EDUCATION",
+      "merit": 59.325,
+      "catchment": {
+        "ekiti": 56.95,
+        "lagos": 57.4,
+        "ogun": 54.975,
+        "ondo": 57.475,
+        "osun": 51.175,
+        "oyo": 53.625
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION ECONOMICS",
+      "merit": 49.65,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION BUSINESS",
+      "merit": 62.3,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 58.475,
+        "ogun": 57.575,
+        "ondo": null,
+        "osun": 58.35,
+        "oyo": 57.5
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION IRS",
+      "merit": 60.475,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION IGBO",
+      "merit": null,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION ENGLISH",
+      "merit": 66.475,
+      "catchment": {
+        "ekiti": 59.95,
+        "lagos": 58.675,
+        "ogun": 62.075,
+        "ondo": 59.85,
+        "osun": 62.1,
+        "oyo": 61.05
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION EARLY CHILDHOOD",
+      "merit": 60.45,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 56.2,
+        "ogun": 54.575,
+        "ondo": 55.95,
+        "osun": null,
+        "oyo": 59.225
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION YORUBA",
+      "merit": 57.825,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION FRENCH",
+      "merit": 60.225,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION HISTORY",
+      "merit": 62.575,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": 57.975,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION CRS",
+      "merit": 57,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION GEOGRAPHY",
+      "merit": null,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATIONAL ADMINISTRATION",
+      "merit": 59.975,
+      "catchment": {
+        "ekiti": 55.05,
+        "lagos": 57.725,
+        "ogun": 51.125,
+        "ondo": 56.7,
+        "osun": null,
+        "oyo": 53.5
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATIONAL FOUNDATIONS",
+      "merit": 57.25,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": 52.05,
+        "ondo": null,
+        "osun": null,
+        "oyo": 54.05
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "SPECIAL EDUCATION",
+      "merit": 52.85,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "HEALTH EDUCATION",
+      "merit": 53.5,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "HUMAN KINETICS",
+      "merit": 52.525,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION BIOLOGY",
+      "merit": 57.4,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 55.625,
+        "ogun": 55.25,
+        "ondo": 54.725,
+        "osun": 55.1,
+        "oyo": 56.425
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION CHEMISTRY",
+      "merit": 53.375,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION HOME ECONOMICS",
+      "merit": 55.575,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION INTEGRATED SCIENCE",
+      "merit": 66.7,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION MATHEMATICS",
+      "merit": 57,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 53.25,
+        "ogun": 54.4,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION PHYSICS",
+      "merit": 56.05,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF EDUCATION",
+      "programme": "EDUCATION TECHNOLOGY",
+      "merit": 53.025,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "BIOMEDICAL ENGINEERING",
+      "merit": 77.05,
+      "catchment": {
+        "ekiti": 75.2,
+        "lagos": 70.2,
+        "ogun": 76.175,
+        "ondo": 74.775,
+        "osun": 66.05,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "CHEMICAL ENGINEERING",
+      "merit": 72.925,
+      "catchment": {
+        "ekiti": 62.625,
+        "lagos": 63.525,
+        "ogun": 70.925,
+        "ondo": 67.525,
+        "osun": 64.675,
+        "oyo": 62.75
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "CIVIL ENGINEERING",
+      "merit": 74.35,
+      "catchment": {
+        "ekiti": 62.675,
+        "lagos": 69.7,
+        "ogun": 71.9,
+        "ondo": 67.775,
+        "osun": 71.55,
+        "oyo": 68.575
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "COMPUTER ENGINEERING",
+      "merit": 82.175,
+      "catchment": {
+        "ekiti": 80.225,
+        "lagos": 77.35,
+        "ogun": 78.8,
+        "ondo": 75.25,
+        "osun": 80.875,
+        "oyo": 74.3
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "ELECTRICAL ENGINEERING",
+      "merit": 79.025,
+      "catchment": {
+        "ekiti": 67.925,
+        "lagos": 74.625,
+        "ogun": 73.975,
+        "ondo": 67.7,
+        "osun": 69.2,
+        "oyo": 71.3
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "MECHANICAL ENGINEERING",
+      "merit": 79.275,
+      "catchment": {
+        "ekiti": 67.625,
+        "lagos": 76.35,
+        "ogun": 77.05,
+        "ondo": 68.8,
+        "osun": 70.525,
+        "oyo": 74.325
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "METALLURGICAL & MATERIAL ENGINEERING",
+      "merit": 67.025,
+      "catchment": {
+        "ekiti": 64.875,
+        "lagos": 60.825,
+        "ogun": 65.45,
+        "ondo": 60.3,
+        "osun": 59.375,
+        "oyo": 60.95
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "PETROLEUM & GAS ENGINEERING",
+      "merit": 75.025,
+      "catchment": {
+        "ekiti": 64.15,
+        "lagos": 66.125,
+        "ogun": 71.675,
+        "ondo": 63.75,
+        "osun": 68.275,
+        "oyo": 69.425
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "SURVEYING & GEOFORMATICS ENGINEERING",
+      "merit": 66.075,
+      "catchment": {
+        "ekiti": 58.075,
+        "lagos": 62.5,
+        "ogun": 64.35,
+        "ondo": 58.875,
+        "osun": 59.75,
+        "oyo": 64.3
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENGINEERING",
+      "programme": "SYSTEMS ENGINEERING",
+      "merit": 78.8,
+      "catchment": {
+        "ekiti": 73.275,
+        "lagos": 72.975,
+        "ogun": 77.925,
+        "ondo": 74.3,
+        "osun": 73.95,
+        "oyo": 72.525
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENVIRONMENTAL SCIENCES",
+      "programme": "BUILDING",
+      "merit": 61.65,
+      "catchment": {
+        "ekiti": 54.95,
+        "lagos": 59.325,
+        "ogun": 58.925,
+        "ondo": 56.425,
+        "osun": 59.025,
+        "oyo": 59.475
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENVIRONMENTAL SCIENCES",
+      "programme": "ESTATE MANAGEMENT",
+      "merit": 56.85,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": 52.625,
+        "ondo": 55.225,
+        "osun": null,
+        "oyo": 56.75
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENVIRONMENTAL SCIENCES",
+      "programme": "QUANTITY SURVEYING",
+      "merit": 65.95,
+      "catchment": {
+        "ekiti": 56.575,
+        "lagos": 59.85,
+        "ogun": 65.175,
+        "ondo": 63.75,
+        "osun": 50.7,
+        "oyo": 64.625
+      }
+    },
+    {
+      "faculty": "FACULTY OF ENVIRONMENTAL SCIENCES",
+      "programme": "URBAN & REGIONAL PLANNING",
+      "merit": 52.825,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF HEALTH PROFESSIONS",
+      "programme": "MEDICAL & LABORATORY SCIENCE",
+      "merit": 75.075,
+      "catchment": {
+        "ekiti": 66.525,
+        "lagos": 71.55,
+        "ogun": 73.425,
+        "ondo": 71.625,
+        "osun": 74.35,
+        "oyo": 69.875
+      }
+    },
+    {
+      "faculty": "FACULTY OF HEALTH PROFESSIONS",
+      "programme": "NURSING SCIENCES",
+      "merit": 77.925,
+      "catchment": {
+        "ekiti": 72.775,
+        "lagos": 73.95,
+        "ogun": 76.275,
+        "ondo": 74.875,
+        "osun": 75.2,
+        "oyo": 74.1
+      }
+    },
+    {
+      "faculty": "FACULTY OF HEALTH PROFESSIONS",
+      "programme": "PHYSIOTHERAPY",
+      "merit": 76,
+      "catchment": {
+        "ekiti": 72.75,
+        "lagos": 67.4,
+        "ogun": 75.375,
+        "ondo": 74.7,
+        "osun": 73.675,
+        "oyo": 72.3
+      }
+    },
+    {
+      "faculty": "FACULTY OF HEALTH PROFESSIONS",
+      "programme": "RADIOGRAPHY",
+      "merit": 77.375,
+      "catchment": {
+        "ekiti": 73.4,
+        "lagos": 74.9,
+        "ogun": 77.25,
+        "ondo": 75.025,
+        "osun": 76.475,
+        "oyo": 77.1
+      }
+    },
+    {
+      "faculty": "FACULTY OF LAW",
+      "programme": "LAW",
+      "merit": 79.125,
+      "catchment": {
+        "ekiti": 75.975,
+        "lagos": 75.15,
+        "ogun": 77.275,
+        "ondo": 75.55,
+        "osun": 75.25,
+        "oyo": 76.35
+      }
+    },
+    {
+      "faculty": "FACULTY OF LIFE SCIENCES",
+      "programme": "BIOCHEMISTRY",
+      "merit": 67.9,
+      "catchment": {
+        "ekiti": 55.95,
+        "lagos": 63.15,
+        "ogun": 63.65,
+        "ondo": 60.625,
+        "osun": 64.025,
+        "oyo": 57.03
+      }
+    },
+    {
+      "faculty": "FACULTY OF LIFE SCIENCES",
+      "programme": "BOTANY",
+      "merit": 54.3,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 50.95,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF LIFE SCIENCES",
+      "programme": "CELL BIOLOGY & GENETICS",
+      "merit": 68.8,
+      "catchment": {
+        "ekiti": 65.175,
+        "lagos": 62.35,
+        "ogun": 64.5,
+        "ondo": 53.2,
+        "osun": 66.15,
+        "oyo": 65.45
+      }
+    },
+    {
+      "faculty": "FACULTY OF LIFE SCIENCES",
+      "programme": "MARINE SCIENCE",
+      "merit": 64.825,
+      "catchment": {
+        "ekiti": 54.25,
+        "lagos": 54.95,
+        "ogun": 60.975,
+        "ondo": 50.55,
+        "osun": 59.3,
+        "oyo": 59.075
+      }
+    },
+    {
+      "faculty": "FACULTY OF LIFE SCIENCES",
+      "programme": "FISHERIES",
+      "merit": 59.825,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF LIFE SCIENCES",
+      "programme": "MICROBIOLOGY",
+      "merit": 67.6,
+      "catchment": {
+        "ekiti": 59.75,
+        "lagos": 61.125,
+        "ogun": 66.525,
+        "ondo": 61.475,
+        "osun": 64.75,
+        "oyo": 65.2
+      }
+    },
+    {
+      "faculty": "FACULTY OF LIFE SCIENCES",
+      "programme": "ZOOLOGY",
+      "merit": 54.825,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "ACCOUNTING",
+      "merit": 73,
+      "catchment": {
+        "ekiti": 61.6,
+        "lagos": 65.275,
+        "ogun": 69.35,
+        "ondo": 65.9,
+        "osun": 68.625,
+        "oyo": 67.85
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "ACTUARIAL SCIENCE",
+      "merit": 65.875,
+      "catchment": {
+        "ekiti": 65.575,
+        "lagos": 62.925,
+        "ogun": 64.175,
+        "ondo": 52.3,
+        "osun": 61.5,
+        "oyo": 54.1
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "BANKING & FINANCE",
+      "merit": 70.35,
+      "catchment": {
+        "ekiti": 62.775,
+        "lagos": 60.375,
+        "ogun": 68.875,
+        "ondo": 55.6,
+        "osun": 65.925,
+        "oyo": 64.275
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "BUSINESS ADMIN.",
+      "merit": 66.725,
+      "catchment": {
+        "ekiti": 55.45,
+        "lagos": 60.025,
+        "ogun": 62.7,
+        "ondo": 57.1,
+        "osun": 60.25,
+        "oyo": 57.175
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "ERHRM",
+      "merit": 66.025,
+      "catchment": {
+        "ekiti": 59,
+        "lagos": 54.975,
+        "ogun": 64,
+        "ondo": 60.125,
+        "osun": 57.4,
+        "oyo": 59.9
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "INSURANCE",
+      "merit": 63.125,
+      "catchment": {
+        "ekiti": 58.275,
+        "lagos": 57.125,
+        "ogun": 54.425,
+        "ondo": 52.6,
+        "osun": 54.075,
+        "oyo": 58.275
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "TAXATION",
+      "merit": 65.48,
+      "catchment": {
+        "ekiti": 55.7,
+        "lagos": 59.88,
+        "ogun": 63.55,
+        "ondo": 50.73,
+        "osun": 65.33,
+        "oyo": 56.85
+      }
+    },
+    {
+      "faculty": "FACULTY OF MANAGEMENT SCIENCES",
+      "programme": "PROCUREMENT",
+      "merit": 58.95,
+      "catchment": {
+        "ekiti": 55.55,
+        "lagos": 56.575,
+        "ogun": 54.75,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHARMACY",
+      "programme": "PHARMACY",
+      "merit": 78.325,
+      "catchment": {
+        "ekiti": 72.875,
+        "lagos": 72.175,
+        "ogun": 76.3,
+        "ondo": 75.275,
+        "osun": 75.85,
+        "oyo": 74.1
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "CHEMISTRY",
+      "merit": 65.4,
+      "catchment": {
+        "ekiti": 62.8,
+        "lagos": 59.15,
+        "ogun": 61.25,
+        "ondo": 55.625,
+        "osun": 59.975,
+        "oyo": 59.875
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "INDUSTRIAL CHEMISTRY",
+      "merit": 54.425,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "ENVIRONMENTAL STANDARDS",
+      "merit": 56.275,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": 54.95,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "GEOLOGY",
+      "merit": 64.5,
+      "catchment": {
+        "ekiti": 58.125,
+        "lagos": 56.575,
+        "ogun": 61.475,
+        "ondo": 52.575,
+        "osun": 58.375,
+        "oyo": 63.225
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "GEOPHYSICS",
+      "merit": 63.75,
+      "catchment": {
+        "ekiti": 60.5,
+        "lagos": 55.65,
+        "ogun": 58.45,
+        "ondo": 58.25,
+        "osun": 57.9,
+        "oyo": 60
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "MATHEMATICS",
+      "merit": 58.775,
+      "catchment": {
+        "ekiti": 57.5,
+        "lagos": 58.275,
+        "ogun": 57.8,
+        "ondo": null,
+        "osun": 55.125,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "INDUSTRIAL MATHEMATICS",
+      "merit": 68.275,
+      "catchment": {
+        "ekiti": 64.475,
+        "lagos": 65.775,
+        "ogun": 66.65,
+        "ondo": 60.7,
+        "osun": 61.775,
+        "oyo": 62.35
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "PHYSICS",
+      "merit": 54.5,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "BIOSTATISTICS",
+      "merit": 64.35,
+      "catchment": {
+        "ekiti": 62.675,
+        "lagos": 58.6,
+        "ogun": 52.025,
+        "ondo": 53.25,
+        "osun": null,
+        "oyo": 52.2
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "DATA SCIENCE",
+      "merit": 77.25,
+      "catchment": {
+        "ekiti": 73.925,
+        "lagos": 72.825,
+        "ogun": 74.425,
+        "ondo": 71.35,
+        "osun": 76.675,
+        "oyo": 76.475
+      }
+    },
+    {
+      "faculty": "FACULTY OF PHYSICAL & EARTH SCIENCE",
+      "programme": "STATISTICS",
+      "merit": 70.45,
+      "catchment": {
+        "ekiti": 69.15,
+        "lagos": 64.725,
+        "ogun": 69.9,
+        "ondo": 66.475,
+        "osun": 65,
+        "oyo": 65.825
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "ECONOMICS",
+      "merit": 73.625,
+      "catchment": {
+        "ekiti": 62.525,
+        "lagos": 64.9,
+        "ogun": 68.05,
+        "ondo": 62.175,
+        "osun": 67.35,
+        "oyo": 69.35
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "ECONOMICS & DEVELOPMENT STUDIES",
+      "merit": 60.65,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "GEOGRAPHY",
+      "merit": 55.7,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "METEOROLOGY & CLIMATE SCIENCE",
+      "merit": 51.725,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "LIBRARY & INFORMATION SCIENCE",
+      "merit": 58.375,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 54.1,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "POLITICAL SCIENCE",
+      "merit": 65.65,
+      "catchment": {
+        "ekiti": 59.75,
+        "lagos": 51.5,
+        "ogun": 61.975,
+        "ondo": 58.825,
+        "osun": 51.5,
+        "oyo": 55.275
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "PSYCHOLOGY",
+      "merit": 70.15,
+      "catchment": {
+        "ekiti": 56.975,
+        "lagos": 67.125,
+        "ogun": 62.95,
+        "ondo": 55.8,
+        "osun": 58.05,
+        "oyo": 60.975
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "PUBLIC ADMINISTRATION",
+      "merit": 70.475,
+      "catchment": {
+        "ekiti": 67.65,
+        "lagos": 67.375,
+        "ogun": 70.025,
+        "ondo": 66.075,
+        "osun": 68.7,
+        "oyo": null
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "SOCIAL WORK",
+      "merit": 65.5,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 64.95,
+        "ogun": 64.15,
+        "ondo": 60.325,
+        "osun": 59.35,
+        "oyo": 59.625
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "SOCIOLOGY",
+      "merit": 65.65,
+      "catchment": {
+        "ekiti": null,
+        "lagos": 55.675,
+        "ogun": 52.675,
+        "ondo": 56.55,
+        "osun": 56.5,
+        "oyo": 57.925
+      }
+    },
+    {
+      "faculty": "FACULTY OF SOCIAL SCIENCES",
+      "programme": "SOCIAL STANDARDS",
+      "merit": 53.925,
+      "catchment": {
+        "ekiti": null,
+        "lagos": null,
+        "ogun": null,
+        "ondo": null,
+        "osun": null,
+        "oyo": null
+      }
+    }
+  ]
+}

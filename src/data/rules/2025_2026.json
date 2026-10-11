@@ -1,0 +1,43 @@
+{
+  "session": "2025/2026",
+  "verificationStatus": "CONFIRMED",
+  "isCalculationSupported": true,
+  "weights": {
+    "utmeMaxScore": 400,
+    "utmeWeight": 50,
+    "putmeMaxScore": 30,
+    "putmeWeight": 30,
+    "olevelMaxScore": 20,
+    "olevelWeight": 20
+  },
+  "eligibility": {
+    "minimumUtmeScore": 200,
+    "maximumSittings": 1,
+    "requiredSubjectCount": 5,
+    "minimumAge": 16,
+    "minimumAgeDate": "2025-09-30",
+    "historicalPutmePassMark": 12.0
+  },
+  "olevelGrading": {
+    "gradePoints": {
+      "A1": 4.0,
+      "B2": 3.6,
+      "B3": 3.2,
+      "C4": 2.8,
+      "C5": 2.4,
+      "C6": 2.0
+    },
+    "failingGradePoints": 0,
+    "minimumQualifyingGrade": "C6"
+  },
+  "roundingPolicy": {
+    "decimalPlaces": 3,
+    "strategy": "ROUND_HALF_UP"
+  },
+  "source": {
+    "url": "https://admissions.unilag.edu.ng/notices.html",
+    "title": "MODALITIES FOR ASSESSMENT OF 2025/2026 UTME CANDIDATES",
+    "publishedDate": "2025-08-01",
+    "notes": "Verified official modalities: JAMB 50%, PUTME 30%, O'Level 20%. Official page source includes grade mapping A1=10, B2=9, B3=8, C4=7, C5=6, C6=5 over 50 points, yielding A1=4.0 ... C6=2.0 on 20% scale."
+  }
+}
