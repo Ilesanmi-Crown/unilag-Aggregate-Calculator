@@ -48,6 +48,12 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1
     }
+  },
+  verification: {
+    google: 'google21c512e51f10d1ad'
+  },
+  other: {
+    'google-site-verification': 'google21c512e51f10d1ad.html'
   }
 };
 
