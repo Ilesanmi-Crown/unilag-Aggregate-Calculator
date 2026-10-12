@@ -1,57 +1,78 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ResultCategory, ExtractedResultData, OcrProgressInfo, OcrReviewPayload } from '../../ocr/types';
+import React, { useReducer, useState, useRef, useEffect, useCallback } from 'react';
+import {
+  ResultCategory,
+  OcrReviewPayload,
+  MultiSlotCompletePayload
+} from '../../ocr/types';
+import {
+  createInitialWorkflowState,
+  workflowReducer,
+  isWorkflowComplete,
+  getMissingCategoryLabels,
+  getConfirmedCount,
+  getSelectedUnprocessedCount,
+  getConfirmedData,
+  ALL_CATEGORIES
+} from '../../ocr/workflow';
 import { validateUploadedFile } from '../../ocr/validator';
 import { recognizeResultImage } from '../../ocr/engine';
 import { parseOcrResult } from '../../ocr/parser';
+import { UploadSlotCard } from './UploadSlotCard';
+import { FinalReviewScreen } from './FinalReviewScreen';
 import { OcrPrivacyNotice } from './OcrPrivacyNotice';
-import { OcrReviewForm } from './OcrReviewForm';
 
 interface ResultUploadModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onApplyPayload: (payload: OcrReviewPayload) => void;
+  onApplyPayload?: (payload: OcrReviewPayload) => void;
+  onApplyAll?: (payload: MultiSlotCompletePayload) => void;
 }
 
 export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
   isOpen,
   onClose,
-  onApplyPayload
+  onApplyPayload,
+  onApplyAll
 }) => {
-  const [category, setCategory] = useState<ResultCategory>('UTME');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  const [progressInfo, setProgressInfo] = useState<OcrProgressInfo>({
-    status: 'idle',
-    progress: 0,
-    statusMessage: ''
+  const [state, dispatch] = useReducer(workflowReducer, undefined, createInitialWorkflowState);
+  const [activeView, setActiveView] = useState<'slots' | 'final_review'>('slots');
+  const [generalError, setGeneralError] = useState<string | null>(null);
+  const [isProcessingAny, setIsProcessingAny] = useState<boolean>(false);
+  const abortControllersRef = useRef<Record<string, AbortController | null>>({
+    UTME: null,
+    PUTME: null,
+    OLEVEL: null
   });
 
-  const [extractedData, setExtractedData] = useState<ExtractedResultData | null>(null);
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  // Track created preview URLs to clean them up on unmount or reset
+  const createdUrlsRef = useRef<Set<string>>(new Set());
 
-  // Revoke object URL on cleanup
-  const cleanupPreview = useCallback(() => {
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-      setPreviewUrl(null);
-    }
-  }, [previewUrl]);
+  const registerPreviewUrl = useCallback((url: string) => {
+    createdUrlsRef.current.add(url);
+    return url;
+  }, []);
+
+  const cleanupAllUrls = useCallback(() => {
+    createdUrlsRef.current.forEach((url) => {
+      try {
+        URL.revokeObjectURL(url);
+      } catch {
+        // Ignored
+      }
+    });
+    createdUrlsRef.current.clear();
+  }, []);
 
   useEffect(() => {
     return () => {
-      cleanupPreview();
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
+      cleanupAllUrls();
+      Object.values(abortControllersRef.current).forEach((ctrl) => ctrl?.abort());
     };
-  }, [cleanupPreview]);
+  }, [cleanupAllUrls]);
 
-  // Handle ESC key to dismiss
+  // Handle ESC key to dismiss modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -63,194 +84,257 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
   }, [isOpen]);
 
   const handleClose = () => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-      abortControllerRef.current = null;
-    }
-    cleanupPreview();
-    setSelectedFile(null);
-    setErrorMsg(null);
-    setExtractedData(null);
-    setProgressInfo({ status: 'idle', progress: 0, statusMessage: '' });
+    Object.values(abortControllersRef.current).forEach((ctrl) => ctrl?.abort());
+    cleanupAllUrls();
+    dispatch({ type: 'RESET_ALL' });
+    setActiveView('slots');
+    setGeneralError(null);
+    setIsProcessingAny(false);
     onClose();
   };
 
-  const handleFileChange = async (file: File) => {
-    setErrorMsg(null);
-    cleanupPreview();
-    setExtractedData(null);
+  // 1. Handle File Selection for an individual slot (Supports any order)
+  const handleSelectFile = async (category: ResultCategory, file: File) => {
+    setGeneralError(null);
 
-    // 1. Client-Side Validation (Size + Magic Bytes)
-    setProgressInfo({
-      status: 'validating',
-      progress: 5,
-      statusMessage: 'Verifying image integrity...'
-    });
-
+    // Validate size and magic header
     const validation = await validateUploadedFile(file);
     if (!validation.valid) {
-      setErrorMsg(validation.error || 'Invalid file.');
-      setProgressInfo({ status: 'idle', progress: 0, statusMessage: '' });
+      dispatch({
+        type: 'FINISH_PROCESSING_ERROR',
+        category,
+        error: validation.error || 'Invalid file format or size.'
+      });
       return;
     }
 
-    const objectUrl = URL.createObjectURL(file);
-    setSelectedFile(file);
-    setPreviewUrl(objectUrl);
+    const objectUrl = registerPreviewUrl(URL.createObjectURL(file));
 
-    // 2. Start OCR Process
-    startOcr(file);
+    dispatch({
+      type: 'SELECT_FILE',
+      category,
+      file,
+      fileName: file.name,
+      previewUrl: objectUrl
+    });
   };
 
-  const startOcr = async (file: File) => {
-    abortControllerRef.current = new AbortController();
-    const signal = abortControllerRef.current.signal;
+  // 2. Process a single slot
+  const handleProcessSlot = async (category: ResultCategory) => {
+    const slot = state[category];
+    if (!slot.file) return;
+
+    setGeneralError(null);
+    setIsProcessingAny(true);
+
+    const abortCtrl = new AbortController();
+    abortControllersRef.current[category] = abortCtrl;
+
+    dispatch({ type: 'START_PROCESSING', category });
 
     try {
       const rawText = await recognizeResultImage(
-        file,
+        slot.file,
         (info) => {
-          setProgressInfo(info);
+          dispatch({
+            type: 'UPDATE_PROGRESS',
+            category,
+            progress: info.progress,
+            statusMessage: info.statusMessage
+          });
         },
-        signal
+        abortCtrl.signal
       );
 
-      setProgressInfo({
-        status: 'parsing',
-        progress: 99,
-        statusMessage: 'Parsing credentials...'
-      });
-
       const parsed = parseOcrResult(rawText, category);
-      setExtractedData(parsed);
-      setProgressInfo({ status: 'review', progress: 100, statusMessage: 'Done' });
+      dispatch({
+        type: 'FINISH_PROCESSING_SUCCESS',
+        category,
+        extractedData: parsed
+      });
     } catch (err) {
-      if (signal.aborted) {
-        setProgressInfo({ status: 'idle', progress: 0, statusMessage: '' });
+      if (abortCtrl.signal.aborted) {
+        dispatch({
+          type: 'FINISH_PROCESSING_ERROR',
+          category,
+          error: 'Processing was cancelled.'
+        });
         return;
       }
-      setErrorMsg(err instanceof Error ? err.message : 'OCR failed to process the image.');
-      setProgressInfo({ status: 'error', progress: 0, statusMessage: '' });
+      dispatch({
+        type: 'FINISH_PROCESSING_ERROR',
+        category,
+        error: err instanceof Error ? err.message : 'OCR failed to process this image.'
+      });
+    } finally {
+      abortControllersRef.current[category] = null;
+      setIsProcessingAny(false);
     }
   };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileChange(e.dataTransfer.files[0]);
+  // 3. Process all selected unprocessed slots sequentially
+  const handleProcessAllSelected = async () => {
+    const categoriesToProcess = ALL_CATEGORIES.filter(
+      (cat) => state[cat].status === 'image_selected' && state[cat].file
+    );
+
+    if (categoriesToProcess.length === 0) return;
+
+    for (const cat of categoriesToProcess) {
+      await handleProcessSlot(cat);
     }
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
+  // 4. Remove a slot
+  const handleRemoveSlot = (category: ResultCategory) => {
+    const ctrl = abortControllersRef.current[category];
+    if (ctrl) {
+      ctrl.abort();
+      abortControllersRef.current[category] = null;
+    }
+    const slot = state[category];
+    if (slot.previewUrl) {
+      URL.revokeObjectURL(slot.previewUrl);
+      createdUrlsRef.current.delete(slot.previewUrl);
+    }
+    dispatch({ type: 'REMOVE_FILE', category });
   };
 
-  const handleConfirm = (payload: OcrReviewPayload) => {
-    onApplyPayload(payload);
+  // 5. Confirm a slot
+  const handleConfirmSlot = (category: ResultCategory, payload: OcrReviewPayload) => {
+    dispatch({ type: 'CONFIRM_SLOT', category, payload });
+  };
+
+  // 6. Edit a slot
+  const handleEditSlot = (category: ResultCategory) => {
+    dispatch({ type: 'EDIT_SLOT', category });
+  };
+
+  // 7. Proceed to Final Review
+  const handleProceedToFinalReview = () => {
+    if (!isWorkflowComplete(state)) {
+      const missing = getMissingCategoryLabels(state);
+      setGeneralError(`Cannot proceed: Missing confirmation for ${missing.join(', ')}.`);
+      return;
+    }
+    setGeneralError(null);
+    setActiveView('final_review');
+  };
+
+  // 8. Apply Complete Workflow to Calculator
+  const handleFinalApply = (completePayload: MultiSlotCompletePayload) => {
+    if (onApplyAll) {
+      onApplyAll(completePayload);
+    } else if (onApplyPayload) {
+      // Backwards compatibility for single-payload handler
+      onApplyPayload(completePayload.utme);
+      onApplyPayload(completePayload.putme);
+      onApplyPayload(completePayload.olevel);
+    }
     handleClose();
   };
 
-  const handleRescan = () => {
-    cleanupPreview();
-    setSelectedFile(null);
-    setExtractedData(null);
-    setErrorMsg(null);
-    setProgressInfo({ status: 'idle', progress: 0, statusMessage: '' });
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
+  const confirmedCount = getConfirmedCount(state);
+  const selectedUnprocessed = getSelectedUnprocessedCount(state);
+  const complete = isWorkflowComplete(state);
+  const confirmedData = getConfirmedData(state);
 
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-2xs flex items-center justify-center p-3 sm:p-6"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="ocr-modal-title"
+      aria-labelledby="ocr-workflow-modal-title"
     >
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
-        {/* Modal Top Bar */}
+      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
+        {/* Minimal Academic Header */}
         <div className="px-5 py-4 bg-[#0F2942] text-white flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-white/10 text-emerald-400">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-white/10 text-emerald-400 flex items-center justify-center">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
             <div>
-              <h2 id="ocr-modal-title" className="text-base font-bold text-white">
-                Scan Academic Result Slip
+              <h2 id="ocr-workflow-modal-title" className="text-sm sm:text-base font-bold text-white">
+                Result Image Interpreter
               </h2>
               <p className="text-xs text-slate-300">
-                Local in-browser OCR interpreter for UTME, O'Level & Post-UTME
+                Upload your three result slips in any order • Processed locally in your browser
               </p>
             </div>
           </div>
-          <button
-            onClick={handleClose}
-            className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-            aria-label="Close dialog"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleClose}
+              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label="Close dialog"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        {/* Modal Content Scroll Area */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1">
-          {/* If in Review State, show review screen */}
-          {extractedData && progressInfo.status === 'review' ? (
-            <OcrReviewForm
-              data={extractedData}
-              imageUrl={previewUrl || undefined}
-              onConfirm={handleConfirm}
-              onCancel={handleClose}
-              onRescan={handleRescan}
+        {/* Modal Body Scroll Area */}
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1">
+          {activeView === 'final_review' && confirmedData ? (
+            <FinalReviewScreen
+              data={confirmedData}
+              onApplyAll={handleFinalApply}
+              onEditCategory={(cat) => {
+                dispatch({ type: 'EDIT_SLOT', category: cat });
+                setActiveView('slots');
+              }}
+              onBack={() => setActiveView('slots')}
             />
           ) : (
             <>
-              {/* Category Selector Tabs */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Select Result Category
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+              {/* Progress and Completion Status Bar */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="text-xs">
+                    <span className="font-bold text-[#0F2942]">Overall Completion:</span>{' '}
+                    <span className="font-semibold text-slate-700">
+                      {confirmedCount} of 3 Confirmed
+                    </span>
+                  </div>
+                  <div className="w-24 bg-slate-200 rounded-full h-2 overflow-hidden">
+                    <div
+                      className="bg-[#0F2942] h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${(confirmedCount / 3) * 100}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {selectedUnprocessed > 0 && (
+                    <button
+                      type="button"
+                      onClick={handleProcessAllSelected}
+                      disabled={isProcessingAny}
+                      className="px-3 py-1.5 rounded-lg bg-[#0F2942] hover:bg-[#163859] disabled:opacity-50 text-white text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      Process All Selected ({selectedUnprocessed})
+                    </button>
+                  )}
+
                   <button
                     type="button"
-                    onClick={() => setCategory('UTME')}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all text-center ${
-                      category === 'UTME'
-                        ? 'bg-[#0F2942] text-white border-[#0F2942] shadow-xs'
-                        : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
+                    onClick={handleProceedToFinalReview}
+                    disabled={!complete}
+                    className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                      complete
+                        ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs cursor-pointer'
+                        : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                     }`}
                   >
-                    JAMB UTME Slip
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCategory('OLEVEL')}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all text-center ${
-                      category === 'OLEVEL'
-                        ? 'bg-[#0F2942] text-white border-[#0F2942] shadow-xs'
-                        : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
-                    }`}
-                  >
-                    O'Level Certificate
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCategory('PUTME')}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all text-center ${
-                      category === 'PUTME'
-                        ? 'bg-[#0F2942] text-white border-[#0F2942] shadow-xs'
-                        : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
-                    }`}
-                  >
-                    UNILAG Post-UTME
+                    Proceed to Final Review →
                   </button>
                 </div>
               </div>
@@ -258,90 +342,70 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
               {/* Privacy Notice */}
               <OcrPrivacyNotice />
 
-              {/* Error Alert */}
-              {errorMsg && (
-                <div className="rounded-lg bg-rose-50 border border-rose-200 p-3.5 text-xs text-rose-800 flex items-start gap-2">
+              {/* General Error or Missing Warning */}
+              {generalError && (
+                <div className="rounded-lg bg-rose-50 border border-rose-200 p-3 text-xs text-rose-800 flex items-start gap-2">
                   <svg className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <div>
-                    <span className="font-bold">Upload Error:</span> {errorMsg}
-                  </div>
+                  <span>{generalError}</span>
                 </div>
               )}
 
-              {/* Upload Dropzone or Progress Bar */}
-              {progressInfo.status !== 'idle' && progressInfo.status !== 'error' ? (
-                <div className="p-8 rounded-xl border border-slate-200 bg-slate-50 flex flex-col items-center justify-center text-center space-y-4">
-                  <div className="w-12 h-12 rounded-full border-4 border-slate-200 border-t-[#0F2942] animate-spin flex items-center justify-center text-[#0F2942]">
-                  </div>
-                  <div className="space-y-1 w-full max-w-md">
-                    <div className="text-sm font-bold text-[#0F2942]">
-                      {progressInfo.statusMessage || 'Processing document...'}
-                    </div>
-                    <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                      <div
-                        className="bg-[#0F2942] h-2.5 rounded-full transition-all duration-300"
-                        style={{ width: `${progressInfo.progress}%` }}
-                      ></div>
-                    </div>
-                    <div className="text-xs text-slate-500 font-medium pt-1">
-                      {progressInfo.progress}% completed (running in your browser)
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleClose}
-                    className="text-xs text-rose-600 font-semibold hover:underline pt-2"
-                  >
-                    Cancel Scan
-                  </button>
-                </div>
-              ) : (
-                <div
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-slate-300 hover:border-[#0F2942] hover:bg-slate-50/50 transition-all rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer group"
+              {/* Three Independent Upload Slots (Flexible Order) */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Slot 1: JAMB UTME */}
+                <UploadSlotCard
+                  slot={state.UTME}
+                  title="JAMB UTME Result"
+                  description="Original JAMB slip showing aggregate score (0–400)."
+                  onFileSelect={(file) => handleSelectFile('UTME', file)}
+                  onProcess={() => handleProcessSlot('UTME')}
+                  onRemove={() => handleRemoveSlot('UTME')}
+                  onConfirm={(payload) => handleConfirmSlot('UTME', payload)}
+                  onEdit={() => handleEditSlot('UTME')}
+                  isProcessingOther={isProcessingAny}
+                />
+
+                {/* Slot 2: UNILAG Post-UTME */}
+                <UploadSlotCard
+                  slot={state.PUTME}
+                  title="UNILAG Post-UTME Result"
+                  description="Screening portal slip showing score over 30.000."
+                  onFileSelect={(file) => handleSelectFile('PUTME', file)}
+                  onProcess={() => handleProcessSlot('PUTME')}
+                  onRemove={() => handleRemoveSlot('PUTME')}
+                  onConfirm={(payload) => handleConfirmSlot('PUTME', payload)}
+                  onEdit={() => handleEditSlot('PUTME')}
+                  isProcessingOther={isProcessingAny}
+                />
+
+                {/* Slot 3: WAEC / O'Level */}
+                <UploadSlotCard
+                  slot={state.OLEVEL}
+                  title="WAEC / O'Level Result"
+                  description="Senior Secondary Certificate showing grades for 5 subjects."
+                  onFileSelect={(file) => handleSelectFile('OLEVEL', file)}
+                  onProcess={() => handleProcessSlot('OLEVEL')}
+                  onRemove={() => handleRemoveSlot('OLEVEL')}
+                  onConfirm={(payload) => handleConfirmSlot('OLEVEL', payload)}
+                  onEdit={() => handleEditSlot('OLEVEL')}
+                  isProcessingOther={isProcessingAny}
+                />
+              </div>
+
+              {/* Bottom Instructions and Manual Entry Switch */}
+              <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 border-t border-slate-100">
+                <span>
+                  Slips can be uploaded in any order. The final review is unlocked once all 3 categories are confirmed.
+                </span>
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="font-semibold text-slate-700 hover:text-slate-900 underline text-left sm:text-right cursor-pointer"
                 >
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    className="hidden"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        handleFileChange(e.target.files[0]);
-                      }
-                    }}
-                  />
-                  <div className="w-14 h-14 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-600 group-hover:text-[#0F2942] flex items-center justify-center transition-colors mb-3">
-                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <p className="text-sm font-bold text-slate-800">
-                    Click to select an image, or drag & drop here
-                  </p>
-                  <p className="text-xs text-slate-500 mt-1 max-w-sm">
-                    Supports clear photographs or screenshots of your {category === 'UTME' ? 'JAMB' : category === 'OLEVEL' ? "O'Level" : 'Post-UTME'} slip.
-                  </p>
-                  <div className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold text-slate-400 bg-white border border-slate-200 px-3 py-1 rounded-full">
-                    <span>JPEG, PNG, WebP</span>
-                    <span>•</span>
-                    <span>Max 5.00 MB</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Instructions and tips */}
-              <div className="bg-slate-50 rounded-lg p-3.5 border border-slate-200 text-xs text-slate-600 space-y-1">
-                <span className="font-bold text-slate-800">Tips for Best Scanning Accuracy:</span>
-                <ul className="list-disc list-inside space-y-0.5 pl-1 text-slate-600">
-                  <li>Ensure good lighting and avoid reflections or shadows on phone screens.</li>
-                  <li>Crop out unnecessary borders, backgrounds, or fingers.</li>
-                  <li>Hold the camera straight without perspective distortion.</li>
-                </ul>
+                  Switch to Manual Entry
+                </button>
               </div>
             </>
           )}

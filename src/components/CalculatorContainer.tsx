@@ -15,7 +15,7 @@ import { ResultCard } from './ResultCard';
 import { ReverseTargetCard } from './ReverseTargetCard';
 import { DepartmentComparisonCard } from './DepartmentComparisonCard';
 import { ResultUploadModal } from './ocr/ResultUploadModal';
-import { OcrReviewPayload } from '../ocr/types';
+import { OcrReviewPayload, MultiSlotCompletePayload } from '../ocr/types';
 
 const INITIAL_SUBJECTS: SubjectGrade[] = [
   { subjectName: 'English Language', grade: 'A1' },
@@ -68,6 +68,31 @@ export const CalculatorContainer: React.FC = () => {
       setOcrSuccessMessage(appliedSummary);
       setTimeout(() => setOcrSuccessMessage(null), 7000);
     }
+  };
+
+  const handleApplyAllOcr = (payload: MultiSlotCompletePayload) => {
+    if (payload.utme.utmeScore !== undefined) {
+      setUtmeScore(String(payload.utme.utmeScore));
+    }
+    if (payload.putme.putmeScore !== undefined) {
+      setPutmeScore(String(payload.putme.putmeScore));
+    }
+    if (payload.olevel.olevelSubjects && payload.olevel.olevelSubjects.length >= 5) {
+      setSubjects((prev) => {
+        const next = [...prev];
+        payload.olevel.olevelSubjects!.forEach((sub, idx) => {
+          if (idx < 5) {
+            next[idx] = sub;
+          }
+        });
+        return next;
+      });
+    }
+
+    setOcrSuccessMessage(
+      `Successfully applied all 3 verified results: UTME (${payload.utme.utmeScore}), Post-UTME (${payload.putme.putmeScore?.toFixed(3)}), and 5 O'Level subjects.`
+    );
+    setTimeout(() => setOcrSuccessMessage(null), 8000);
   };
 
   // Biomedical Engineering selection flag
@@ -217,7 +242,7 @@ export const CalculatorContainer: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span>Scan Result Slip</span>
+                <span>Upload Result Slips (OCR)</span>
               </button>
               <TargetModeToggle isTargetMode={isTargetMode} onToggle={setIsTargetMode} />
             </div>
@@ -354,6 +379,7 @@ export const CalculatorContainer: React.FC = () => {
         isOpen={isOcrModalOpen}
         onClose={() => setIsOcrModalOpen(false)}
         onApplyPayload={handleApplyOcrPayload}
+        onApplyAll={handleApplyAllOcr}
       />
     </div>
   );

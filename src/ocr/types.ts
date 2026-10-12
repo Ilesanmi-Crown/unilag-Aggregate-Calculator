@@ -78,3 +78,36 @@ export interface OcrReviewPayload {
   examYear?: string;
   examBody?: string;
 }
+
+export type UploadSlotStatus =
+  | 'not_uploaded'
+  | 'image_selected'
+  | 'processing'
+  | 'ready_for_review'
+  | 'confirmed'
+  | 'needs_attention';
+
+export interface ResultSlotState {
+  category: ResultCategory;
+  status: UploadSlotStatus;
+  file: File | null;
+  fileName?: string;
+  previewUrl: string | null;
+  extractedData: ExtractedResultData | null;
+  confirmedPayload: OcrReviewPayload | null;
+  error: string | null;
+  progress: number;
+  statusMessage: string;
+}
+
+export type MultiSlotWorkflowState = {
+  UTME: ResultSlotState;
+  PUTME: ResultSlotState;
+  OLEVEL: ResultSlotState;
+};
+
+export interface MultiSlotCompletePayload {
+  utme: OcrReviewPayload;
+  putme: OcrReviewPayload;
+  olevel: OcrReviewPayload;
+}
