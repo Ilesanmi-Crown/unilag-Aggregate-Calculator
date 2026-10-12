@@ -5,14 +5,52 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { AdmissionDisclaimer } from '@/components/AdmissionDisclaimer';
 
+import { JsonLd, buildArticleSchema, buildBreadcrumbSchema } from '@/components/seo/JsonLd';
+import { SITE_CONFIG, absoluteUrl } from '@/config/site';
+
+const PAGE_TITLE = 'UNILAG Departmental Cut-Off Marks Explained | Merit & Catchment Guide';
+const PAGE_DESCRIPTION = 'Understand how UNILAG sets undergraduate departmental cut-off marks, the difference between Merit (45%) and South-Western Catchment (35%) quotas, and what NIL marks mean.';
+const PAGE_PATH = '/departmental-cut-off-marks-guide';
+
 export const metadata: Metadata = {
-  title: 'UNILAG Departmental Cut-Off Marks Explained | Merit & Catchment Guide',
-  description: 'Understand how UNILAG sets undergraduate departmental cut-off marks, the difference between Merit and Catchment quotas, and how to interpret official admission scores.',
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: {
+    canonical: PAGE_PATH
+  },
+  openGraph: {
+    type: 'article',
+    locale: SITE_CONFIG.locale,
+    url: absoluteUrl(PAGE_PATH),
+    siteName: SITE_CONFIG.name,
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION
+  }
 };
 
 export default function CutoffMarksGuidePage() {
+  const schemas = [
+    buildBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Departmental Cut-Off Marks Guide', path: PAGE_PATH }
+    ]),
+    buildArticleSchema({
+      title: PAGE_TITLE,
+      description: PAGE_DESCRIPTION,
+      path: PAGE_PATH,
+      datePublished: '2026-09-18T00:00:00Z',
+      dateModified: '2026-10-11T00:00:00Z'
+    })
+  ];
+
   return (
     <>
+      <JsonLd schema={schemas} />
       <Header />
       <main id="main-content" className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
         <header className="space-y-3 pb-6 border-b border-slate-200">

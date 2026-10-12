@@ -12,18 +12,17 @@ A high-precision, production-grade calculation engine and web platform designed 
 
 ---
 
-## 🚦 Current Status: Phase 4 Completed (Data Audit, SEO & Release Candidate)
+## 🚦 Current Status: SEO & AI Search Visibility Phase Completed
 
-Phase 4 has audited the entire platform, corrected unverified calculation paths, and established an SEO-ready static release:
-1. **Audited & Verified Calculation Engine:** Enforced verified 5-subject O'Level scoring. Removed unverified Biomedical Engineering `5/6` scaling formula, replacing it with an explicit prerequisite eligibility advisory.
-2. **Comprehensive Cut-Off Audit (`docs/CUTOFF_AUDIT.md`):** All 112 published programmes in `src/data/cutoffs/2026_2027.json` reconciled against official September 16, 2026 UNILAG release. Zero mismatches; official "NIL" values preserved as `null`.
-3. **Dedicated Educational SEO Guides:**
-   - `/how-to-calculate-unilag-aggregate`: In-depth walkthrough of the 50:30:20 composite scoring formula.
-   - `/departmental-cut-off-marks-guide`: National Merit vs South-Western Catchment quota policies explainer.
-4. **Technical SEO Architecture:** Fully pre-rendered static HTML, sitemap.xml, robots.txt, and factual JSON-LD metadata.
-5. **Release Audit (`docs/RELEASE_AUDIT.md`):** Complete documentation of findings, verification statuses, and deployment readiness.
-6. **Automated Test Suite:** 79 automated tests passing across 8 test suites with 0 TypeScript errors.
-7. **Static Export Verified:** 100% pre-rendered in `out/` ready for static hosting.
+The SEO & AI Search Visibility Phase delivers a complete technical SEO foundation, structured data, trust pages, and AI search discoverability without compromising performance or accuracy:
+1. **Configurable Base Domain Architecture:** Eliminated invented domains. Centralized site URL resolution via `NEXT_PUBLIC_SITE_URL` with a documented placeholder fallback (`https://unilag-calculator.placeholder.internal`).
+2. **Comprehensive Metadata & Social Sharing:** Standardized title templates, canonical tags on all indexable pages, Open Graph previews (`og:locale: 'en_NG'`), Twitter cards, and search bot directives.
+3. **Structured Data (JSON-LD):** Implemented schema.org `WebApplication` (free educational app), `WebSite`, `Article`, and `BreadcrumbList` matching visible on-page content without synthetic reviews.
+4. **Essential E-E-A-T Trust Pages:** Added dedicated, verified pages for [`/about`](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/src/app/about/page.tsx) (mission and methodology), [`/contact`](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/src/app/contact/page.tsx) (error reporting and security notices), and [`/privacy`](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/src/app/privacy/page.tsx) (100% in-browser OCR privacy guarantee).
+5. **Custom 404 Recovery Experience:** Branded, accessible [`/not-found`](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/src/app/not-found.tsx) page with direct recovery links to the calculator, cut-off directory, and scoring guides.
+6. **Optimized Sitemap & Robots:** Static `sitemap.xml` (all 6 indexable canonical routes) and `robots.txt` generated automatically during export.
+7. **Google AI Search Readiness:** Pre-rendered semantic text, structured Q&A formats, and authoritative source citations with dates for AI Overviews and AI Mode eligibility.
+8. **Static Export Verified:** All 10 routes prerendered in `out/` with **101 / 101 automated tests passing** and 0 TypeScript compilation errors.
 
 ---
 
@@ -44,6 +43,11 @@ All specifications, official source citations, and engineering strategies are do
 * **[System Architecture Design (`docs/ARCHITECTURE.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/ARCHITECTURE.md)**
 * **[Phase Plan & Roadmap (`docs/PHASE_PLAN.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/PHASE_PLAN.md)**
 * **[Quality Assurance & Testing Strategy (`docs/QA_STRATEGY.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/QA_STRATEGY.md)**
+* **[Image Interpreter Architecture Plan (`docs/IMAGE_INTERPRETER_PLAN.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/IMAGE_INTERPRETER_PLAN.md)**
+* **[Image Interpreter Technical Guide (`docs/IMAGE_INTERPRETER.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/IMAGE_INTERPRETER.md)**
+* **[SEO Audit & Discovery Findings (`docs/SEO_AUDIT.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/SEO_AUDIT.md)**
+* **[SEO Content & Keyword Strategy Plan (`docs/SEO_CONTENT_PLAN.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/SEO_CONTENT_PLAN.md)**
+* **[SEO & AI Search Visibility Release Audit (`docs/SEO_RELEASE_AUDIT.md`)](file:///c:/Users/CROWN/Desktop/unilag_agreeate_calculator/docs/SEO_RELEASE_AUDIT.md)**
 
 ---
 
@@ -101,7 +105,7 @@ Generates 100% pre-rendered HTML, CSS, JavaScript, and metadata in the `out/` di
 ```bash
 npm test
 ```
-Executes all 79 unit, schema, integration, and UI workflow tests.
+Executes all 101 unit, schema, integration, OCR, and UI workflow tests.
 
 ### Run Tests in Watch Mode
 ```bash

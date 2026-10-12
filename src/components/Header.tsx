@@ -1,8 +1,9 @@
 import React from 'react';
+import Link from 'next/link';
 
 export const Header: React.FC = () => {
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xs border-b border-slate-200">
       {/* Accessibility Skip Link */}
       <a
         href="#calculator-section"
@@ -12,7 +13,7 @@ export const Header: React.FC = () => {
       </a>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="/" className="flex items-center space-x-3 focus-ring rounded">
+        <Link href="/" className="flex items-center space-x-3 focus-ring rounded">
           <div className="w-9 h-9 rounded bg-[#0F2942] text-white flex items-center justify-center font-bold text-lg tracking-wider" aria-hidden="true">
             UL
           </div>
@@ -24,24 +25,27 @@ export const Header: React.FC = () => {
               Undergraduate Admissions Estimator
             </span>
           </div>
-        </a>
+        </Link>
 
         <nav aria-label="Main Navigation" className="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-          <a href="/#calculator-section" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
+          <Link href="/#calculator-section" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
             Calculator
-          </a>
-          <a href="/#cutoffs-section" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
+          </Link>
+          <Link href="/#cutoffs-section" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
             Department Cut-Offs
-          </a>
-          <a href="/how-to-calculate-unilag-aggregate" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
+          </Link>
+          <Link href="/how-to-calculate-unilag-aggregate" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
             Scoring Guide
-          </a>
-          <a href="/departmental-cut-off-marks-guide" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
+          </Link>
+          <Link href="/departmental-cut-off-marks-guide" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
             Cut-Offs Guide
-          </a>
-          <a href="/#faq-section" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
+          </Link>
+          <Link href="/about" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
+            About
+          </Link>
+          <Link href="/#faq-section" className="hover:text-[#0F2942] transition-colors focus-ring rounded px-1">
             FAQ
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

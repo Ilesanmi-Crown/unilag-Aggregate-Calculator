@@ -1,28 +1,60 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { getSiteUrl, SITE_CONFIG } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'UNILAG Aggregate Calculator | 2026/2027 Admission Screening Estimator',
-  description: 'Free, accurate University of Lagos (UNILAG) undergraduate admission aggregate calculator. Computes UTME (50%), Post-UTME (30%), and O\'Level (20%) scores with official departmental cut-off comparison.',
+  metadataBase: new URL(getSiteUrl()),
+  title: {
+    default: `${SITE_CONFIG.name} | 2026/2027 Admission Screening Estimator`,
+    template: `%s | ${SITE_CONFIG.name}`
+  },
+  description: SITE_CONFIG.description,
   keywords: [
     'UNILAG aggregate calculator',
     'University of Lagos cut off mark',
     'UNILAG post UTME calculator',
     'UNILAG admission requirements',
     'UNILAG aggregate formula',
-    'JAMB cut off UNILAG'
+    'UNILAG O level grade points',
+    'JAMB cut off UNILAG',
+    'UNILAG merit cut off mark'
   ],
-  authors: [{ name: 'UNILAG Aggregate Calculator Technical Project' }],
+  authors: [{ name: SITE_CONFIG.author }],
+  creator: SITE_CONFIG.author,
+  publisher: SITE_CONFIG.author,
+  alternates: {
+    canonical: '/'
+  },
+  openGraph: {
+    type: 'website',
+    locale: SITE_CONFIG.locale,
+    url: getSiteUrl(),
+    siteName: SITE_CONFIG.name,
+    title: `${SITE_CONFIG.name} | 2026/2027 Admission Screening Estimator`,
+    description: SITE_CONFIG.description
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_CONFIG.name} | 2026/2027 Admission Screening Estimator`,
+    description: SITE_CONFIG.description
+  },
   robots: {
     index: true,
-    follow: true
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1
+    }
   }
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0F2942'
+  themeColor: SITE_CONFIG.defaultThemeColor
 };
 
 export default function RootLayout({

@@ -7,10 +7,14 @@ import { ScoringMethodExplanation } from '../components/ScoringMethodExplanation
 import { FaqSection } from '../components/FaqSection';
 import { AdmissionDisclaimer } from '../components/AdmissionDisclaimer';
 import { Footer } from '../components/Footer';
+import { JsonLd, buildWebSiteSchema, buildWebApplicationSchema } from '../components/seo/JsonLd';
 
 export default function HomePage() {
+  const schemas = [buildWebSiteSchema(), buildWebApplicationSchema()];
+
   return (
     <>
+      <JsonLd schema={schemas} />
       <Header />
       <main id="main-content" className="flex-1">
         <CompactHero />

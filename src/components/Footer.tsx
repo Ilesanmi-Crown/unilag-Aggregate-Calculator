@@ -1,18 +1,32 @@
 import React from 'react';
+import Link from 'next/link';
 
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-slate-900 text-slate-400 text-xs py-10 mt-16 border-t border-slate-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-6 border-b border-slate-800">
-          {/* Column 1: About */}
+          {/* Column 1: About & Trust */}
           <div className="space-y-2">
             <span className="font-bold text-white text-sm block">
               UNILAG Aggregate Calculator
             </span>
             <p className="text-slate-400 text-xs leading-relaxed">
-              An independent, privacy-friendly admission score projection tool designed for Nigerian secondary school students and UTME candidates.
+              An independent, privacy-first admission score projection tool designed for Nigerian secondary school students, UTME candidates, and parents.
             </p>
+            <div className="pt-2 flex items-center space-x-3 text-xs text-slate-300">
+              <Link href="/about" className="hover:text-white underline">
+                About Project
+              </Link>
+              <span>•</span>
+              <Link href="/contact" className="hover:text-white underline">
+                Contact & Feedback
+              </Link>
+              <span>•</span>
+              <Link href="/privacy" className="hover:text-white underline">
+                Privacy Policy
+              </Link>
+            </div>
           </div>
 
           {/* Column 2: Official Portals */}
@@ -57,24 +71,24 @@ export const Footer: React.FC = () => {
           {/* Column 3: Admissions Guides & Citations */}
           <div className="space-y-2">
             <span className="font-bold text-white text-sm block">
-              Admissions Guides
+              Admissions Guides & Policies
             </span>
             <ul className="space-y-1.5">
               <li>
-                <a
+                <Link
                   href="/how-to-calculate-unilag-aggregate"
                   className="hover:text-white transition-colors underline focus-ring rounded"
                 >
                   How to Calculate Aggregate Score
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/departmental-cut-off-marks-guide"
                   className="hover:text-white transition-colors underline focus-ring rounded"
                 >
                   Departmental Cut-Off Marks Guide
-                </a>
+                </Link>
               </li>
             </ul>
             <p className="text-slate-400 text-xs leading-relaxed pt-2">
@@ -85,12 +99,25 @@ export const Footer: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-slate-500 text-[11px]">
           <p>
-            © {new Date().getFullYear()} UNILAG Aggregate Calculator. Open-source educational project.
+            © {new Date().getFullYear()} UNILAG Aggregate Calculator. Open-source educational utility.
           </p>
-          <p>
-            Not affiliated with, sponsored by, or endorsed by the University of Lagos.
-          </p>
+          <div className="flex items-center gap-3">
+            <Link href="/privacy" className="hover:text-slate-300 underline">
+              Privacy Guarantee
+            </Link>
+            <span>•</span>
+            <Link href="/about" className="hover:text-slate-300 underline">
+              Methodology
+            </Link>
+            <span>•</span>
+            <Link href="/contact" className="hover:text-slate-300 underline">
+              Report Correction
+            </Link>
+          </div>
         </div>
+        <p className="text-slate-500 text-[10px] text-center sm:text-left">
+          Independent educational resource. Not officially affiliated with, sponsored by, or endorsed by the University of Lagos or JAMB.
+        </p>
       </div>
     </footer>
   );
