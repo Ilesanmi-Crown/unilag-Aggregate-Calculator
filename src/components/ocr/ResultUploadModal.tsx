@@ -14,12 +14,14 @@ import {
   getConfirmedCount,
   getSelectedUnprocessedCount,
   getConfirmedData,
+  CATEGORY_LABELS,
   ALL_CATEGORIES
 } from '../../ocr/workflow';
 import { validateUploadedFile } from '../../ocr/validator';
 import { recognizeResultImage } from '../../ocr/engine';
 import { parseOcrResult } from '../../ocr/parser';
 import { UploadSlotCard } from './UploadSlotCard';
+import { OcrReviewForm } from './OcrReviewForm';
 import { FinalReviewScreen } from './FinalReviewScreen';
 import { OcrPrivacyNotice } from './OcrPrivacyNotice';
 
@@ -37,7 +39,8 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
   onApplyAll
 }) => {
   const [state, dispatch] = useReducer(workflowReducer, undefined, createInitialWorkflowState);
-  const [activeView, setActiveView] = useState<'slots' | 'final_review'>('slots');
+  const [activeView, setActiveView] = useState<'slots' | 'review_slot' | 'final_review'>('slots');
+  const [activeReviewCategory, setActiveReviewCategory] = useState<ResultCategory>('UTME');
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [isProcessingAny, setIsProcessingAny] = useState<boolean>(false);
   const abortControllersRef = useRef<Record<string, AbortController | null>>({
@@ -152,6 +155,10 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
         category,
         extractedData: parsed
       });
+
+      // Automatically invite user to review if processed individually
+      setActiveReviewCategory(category);
+      setActiveView('review_slot');
     } catch (err) {
       if (abortCtrl.signal.aborted) {
         dispatch({
@@ -180,9 +187,51 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
 
     if (categoriesToProcess.length === 0) return;
 
+    setGeneralError(null);
+    setIsProcessingAny(true);
+
     for (const cat of categoriesToProcess) {
-      await handleProcessSlot(cat);
+      const slot = state[cat];
+      if (!slot.file) continue;
+
+      const abortCtrl = new AbortController();
+      abortControllersRef.current[cat] = abortCtrl;
+      dispatch({ type: 'START_PROCESSING', category: cat });
+
+      try {
+        const rawText = await recognizeResultImage(
+          slot.file,
+          (info) => {
+            dispatch({
+              type: 'UPDATE_PROGRESS',
+              category: cat,
+              progress: info.progress,
+              statusMessage: info.statusMessage
+            });
+          },
+          abortCtrl.signal
+        );
+
+        const parsed = parseOcrResult(rawText, cat);
+        dispatch({
+          type: 'FINISH_PROCESSING_SUCCESS',
+          category: cat,
+          extractedData: parsed
+        });
+      } catch (err) {
+        if (!abortCtrl.signal.aborted) {
+          dispatch({
+            type: 'FINISH_PROCESSING_ERROR',
+            category: cat,
+            error: err instanceof Error ? err.message : 'OCR failed to process this image.'
+          });
+        }
+      } finally {
+        abortControllersRef.current[cat] = null;
+      }
     }
+
+    setIsProcessingAny(false);
   };
 
   // 4. Remove a slot
@@ -200,17 +249,26 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
     dispatch({ type: 'REMOVE_FILE', category });
   };
 
-  // 5. Confirm a slot
+  // 5. Open Review for a slot
+  const handleOpenReview = (category: ResultCategory) => {
+    setActiveReviewCategory(category);
+    setActiveView('review_slot');
+  };
+
+  // 6. Confirm a slot
   const handleConfirmSlot = (category: ResultCategory, payload: OcrReviewPayload) => {
     dispatch({ type: 'CONFIRM_SLOT', category, payload });
+    setActiveView('slots');
   };
 
-  // 6. Edit a slot
+  // 7. Edit a slot
   const handleEditSlot = (category: ResultCategory) => {
     dispatch({ type: 'EDIT_SLOT', category });
+    setActiveReviewCategory(category);
+    setActiveView('review_slot');
   };
 
-  // 7. Proceed to Final Review
+  // 8. Proceed to Final Review
   const handleProceedToFinalReview = () => {
     if (!isWorkflowComplete(state)) {
       const missing = getMissingCategoryLabels(state);
@@ -221,12 +279,11 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
     setActiveView('final_review');
   };
 
-  // 8. Apply Complete Workflow to Calculator
+  // 9. Apply Complete Workflow to Calculator
   const handleFinalApply = (completePayload: MultiSlotCompletePayload) => {
     if (onApplyAll) {
       onApplyAll(completePayload);
     } else if (onApplyPayload) {
-      // Backwards compatibility for single-payload handler
       onApplyPayload(completePayload.utme);
       onApplyPayload(completePayload.putme);
       onApplyPayload(completePayload.olevel);
@@ -238,6 +295,7 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
   const selectedUnprocessed = getSelectedUnprocessedCount(state);
   const complete = isWorkflowComplete(state);
   const confirmedData = getConfirmedData(state);
+  const currentReviewSlot = state[activeReviewCategory];
 
   if (!isOpen) return null;
 
@@ -283,17 +341,47 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
 
         {/* Modal Body Scroll Area */}
         <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1">
+          {/* VIEW 1: FINAL REVIEW SCREEN */}
           {activeView === 'final_review' && confirmedData ? (
             <FinalReviewScreen
               data={confirmedData}
               onApplyAll={handleFinalApply}
               onEditCategory={(cat) => {
                 dispatch({ type: 'EDIT_SLOT', category: cat });
-                setActiveView('slots');
+                setActiveReviewCategory(cat);
+                setActiveView('review_slot');
               }}
               onBack={() => setActiveView('slots')}
             />
+          ) : activeView === 'review_slot' && currentReviewSlot?.extractedData ? (
+            /* VIEW 2: DEDICATED FULL-WIDTH REVIEW FOR A SINGLE SLOT */
+            <div className="space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setActiveView('slots')}
+                  className="text-xs font-semibold text-[#0F2942] hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  ← Back to 3-Slot Overview
+                </button>
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Reviewing: {CATEGORY_LABELS[activeReviewCategory]}
+                </span>
+              </div>
+
+              <OcrReviewForm
+                data={currentReviewSlot.extractedData}
+                imageUrl={currentReviewSlot.previewUrl || undefined}
+                onConfirm={(payload) => handleConfirmSlot(activeReviewCategory, payload)}
+                onCancel={() => setActiveView('slots')}
+                onRescan={() => {
+                  handleRemoveSlot(activeReviewCategory);
+                  setActiveView('slots');
+                }}
+              />
+            </div>
           ) : (
+            /* VIEW 3: 3-SLOT OVERVIEW (FLEXIBLE ORDER) */
             <>
               {/* Progress and Completion Status Bar */}
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -362,7 +450,7 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
                   onFileSelect={(file) => handleSelectFile('UTME', file)}
                   onProcess={() => handleProcessSlot('UTME')}
                   onRemove={() => handleRemoveSlot('UTME')}
-                  onConfirm={(payload) => handleConfirmSlot('UTME', payload)}
+                  onOpenReview={() => handleOpenReview('UTME')}
                   onEdit={() => handleEditSlot('UTME')}
                   isProcessingOther={isProcessingAny}
                 />
@@ -375,7 +463,7 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
                   onFileSelect={(file) => handleSelectFile('PUTME', file)}
                   onProcess={() => handleProcessSlot('PUTME')}
                   onRemove={() => handleRemoveSlot('PUTME')}
-                  onConfirm={(payload) => handleConfirmSlot('PUTME', payload)}
+                  onOpenReview={() => handleOpenReview('PUTME')}
                   onEdit={() => handleEditSlot('PUTME')}
                   isProcessingOther={isProcessingAny}
                 />
@@ -388,7 +476,7 @@ export const ResultUploadModal: React.FC<ResultUploadModalProps> = ({
                   onFileSelect={(file) => handleSelectFile('OLEVEL', file)}
                   onProcess={() => handleProcessSlot('OLEVEL')}
                   onRemove={() => handleRemoveSlot('OLEVEL')}
-                  onConfirm={(payload) => handleConfirmSlot('OLEVEL', payload)}
+                  onOpenReview={() => handleOpenReview('OLEVEL')}
                   onEdit={() => handleEditSlot('OLEVEL')}
                   isProcessingOther={isProcessingAny}
                 />

@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { ResultSlotState, OcrReviewPayload } from '../../ocr/types';
-import { OcrReviewForm } from './OcrReviewForm';
+import { ResultSlotState } from '../../ocr/types';
 
 interface UploadSlotCardProps {
   slot: ResultSlotState;
@@ -12,7 +11,7 @@ interface UploadSlotCardProps {
   onFileSelect: (file: File) => void;
   onProcess: () => void;
   onRemove: () => void;
-  onConfirm: (payload: OcrReviewPayload) => void;
+  onOpenReview: () => void;
   onEdit: () => void;
   isProcessingOther?: boolean;
 }
@@ -25,7 +24,7 @@ export const UploadSlotCard: React.FC<UploadSlotCardProps> = ({
   onFileSelect,
   onProcess,
   onRemove,
-  onConfirm,
+  onOpenReview,
   onEdit,
   isProcessingOther = false
 }) => {
@@ -93,6 +92,22 @@ export const UploadSlotCard: React.FC<UploadSlotCardProps> = ({
     }
   };
 
+  // Helper to get quick detected value snippet
+  const getDetectedSnippet = () => {
+    const data = slot.extractedData;
+    if (!data) return null;
+    if (data.category === 'UTME') {
+      return data.totalScore !== undefined ? `Detected Score: ${data.totalScore} / 400` : 'Score detected';
+    }
+    if (data.category === 'PUTME') {
+      return data.score !== undefined ? `Detected Score: ${data.score.toFixed(3)} / 30.000` : 'Score detected';
+    }
+    if (data.category === 'OLEVEL') {
+      return `${data.subjects.length} subjects detected`;
+    }
+    return null;
+  };
+
   return (
     <div
       className={`rounded-xl border transition-all ${
@@ -101,7 +116,7 @@ export const UploadSlotCard: React.FC<UploadSlotCardProps> = ({
           : slot.status === 'needs_attention'
           ? 'bg-rose-50/30 border-rose-200'
           : slot.status === 'ready_for_review'
-          ? 'bg-amber-50/20 border-amber-300 ring-1 ring-amber-200'
+          ? 'bg-amber-50/30 border-amber-300 ring-1 ring-amber-200'
           : 'bg-white border-slate-200 shadow-2xs'
       } p-4 sm:p-5 flex flex-col justify-between`}
       role="region"
@@ -228,15 +243,36 @@ export const UploadSlotCard: React.FC<UploadSlotCardProps> = ({
           )}
 
           {/* 4. READY FOR REVIEW */}
-          {slot.status === 'ready_for_review' && slot.extractedData && (
-            <div className="pt-1">
-              <OcrReviewForm
-                data={slot.extractedData}
-                imageUrl={slot.previewUrl || undefined}
-                onConfirm={onConfirm}
-                onCancel={onRemove}
-                onRescan={() => fileInputRef.current?.click()}
-              />
+          {slot.status === 'ready_for_review' && (
+            <div className="space-y-3">
+              <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-1">
+                <div className="font-bold flex items-center gap-1.5">
+                  <svg className="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Scan Finished</span>
+                </div>
+                <p className="text-[11px] text-amber-800">
+                  {getDetectedSnippet() || 'Extracted credentials are ready for your inspection.'}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onOpenReview}
+                  className="flex-1 py-2 px-3 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-2xs"
+                >
+                  Review & Confirm Values →
+                </button>
+                <button
+                  type="button"
+                  onClick={onRemove}
+                  className="py-2 px-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-500 text-xs font-medium transition-colors cursor-pointer"
+                >
+                  Clear
+                </button>
+              </div>
             </div>
           )}
 
@@ -254,7 +290,7 @@ export const UploadSlotCard: React.FC<UploadSlotCardProps> = ({
                 )}
                 {slot.category === 'PUTME' && (
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-600">Confirmed Screening Score:</span>
+                    <span className="text-slate-600">Confirmed Screening:</span>
                     <span className="font-bold text-[#0F2942] text-sm">
                       {slot.confirmedPayload.putmeScore?.toFixed(3)} / 30.000
                     </span>
